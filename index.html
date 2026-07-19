@@ -179,14 +179,40 @@
       border-radius: 10px;
     }
 
-    .coffee {
+    .support-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.4rem;
       margin-top: 2rem;
-      text-align: center;
+      padding: 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: #fffdf5;
+      text-align: left;
     }
 
-    .coffee p {
-      margin-bottom: 0.6rem;
+    .support-text {
+      max-width: 430px;
+    }
+
+    .support-text h2 {
+      margin: 0 0 0.35rem 0;
+    }
+
+    .support-text p {
+      margin: 0 0 0.75rem 0;
       color: var(--muted);
+    }
+
+    .support-qr {
+      width: 132px;
+      height: 132px;
+      padding: 8px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #ffffff;
+      flex: 0 0 auto;
     }
 
     .footer {
@@ -224,6 +250,15 @@
 
       .button {
         width: 100%;
+      }
+
+      .support-box {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .support-text {
+        max-width: 100%;
       }
     }
   </style>
@@ -296,11 +331,15 @@
         SAPESUCA is intended for professional education, scientific use, and clinical research support. It does not replace clinical judgment, validated institutional protocols, or individual medical advice.
       </div>
 
-      <div class="coffee">
-        <p>Support ongoing development, hosting, maintenance, and future academic tools.</p>
-        <a href="https://www.buymeacoffee.com/tarkanjaeger" target="_blank" rel="noopener noreferrer">
-          <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Tarkan Jäger a coffee" style="height:45px;width:165px;max-width:100%;">
-        </a>
+      <div class="support-box" aria-label="Support SAPESUCA development">
+        <img src="buymeacoffee-qr.svg" alt="QR code linking to the Buy Me a Coffee support page for SAPESUCA" class="support-qr" width="132" height="132" loading="lazy">
+        <div class="support-text">
+          <h2>Support this project</h2>
+          <p>Help fund hosting, maintenance, testing, and future academic tools for abdominal cancer care.</p>
+          <a href="https://www.buymeacoffee.com/tarkanjaeger" target="_blank" rel="noopener noreferrer">
+            <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Tarkan Jäger a coffee" style="height:45px;width:165px;max-width:100%;">
+          </a>
+        </div>
       </div>
     </section>
 
