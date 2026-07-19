@@ -2,103 +2,312 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>SAPESUCA – Salzburg Peritoneal Surface Calculator</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="SAPESUCA: An academic, freely accessible Shiny app to calculate the peritoneal surface area for patients. Based on our peer-reviewed publication in MDPI Cancers.">
+
+  <title>SAPESUCA – Salzburg Peritoneal Surface Calculator</title>
+  <meta name="description" content="SAPESUCA is a peer-reviewed academic tool for individualized peritoneal surface area calculation, published in Cancers. It supports research into CRS, HIPEC, and patient-specific peritoneal surface assessment.">
+  <meta name="author" content="Tarkan Jäger">
+  <link rel="canonical" href="https://www.sapesuca.com/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SAPESUCA – Salzburg Peritoneal Surface Calculator">
+  <meta property="og:description" content="A peer-reviewed academic tool for individualized peritoneal surface area calculation, published in Cancers.">
+  <meta property="og:image" content="https://www.sapesuca.com/sapesuca_screen.png">
+  <meta property="og:url" content="https://www.sapesuca.com/">
+  <meta property="og:site_name" content="SAPESUCA">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="SAPESUCA – Salzburg Peritoneal Surface Calculator">
+  <meta name="twitter:description" content="Peer-reviewed academic tool for individualized peritoneal surface area calculation.">
+  <meta name="twitter:image" content="https://www.sapesuca.com/sapesuca_screen.png">
+
   <style>
+    :root {
+      --primary: #1a237e;
+      --primary-light: #3949ab;
+      --primary-dark: #10164f;
+      --accent: #f7c948;
+      --text: #202124;
+      --muted: #5f6368;
+      --background: #f6f7fb;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f9f9fa;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, #f6f7fb 0%, #eef1fb 100%);
       margin: 0;
       padding: 0;
-      color: #222;
+      color: var(--text);
+      line-height: 1.6;
     }
+
     .container {
-      max-width: 600px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 2em 2em 2.5em 2em;
-      border-radius: 14px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      width: min(920px, calc(100% - 32px));
+      margin: 32px auto;
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px rgba(16, 24, 40, 0.10);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+    }
+
+    .hero {
       text-align: center;
     }
-    h1 {
-      color: #1a237e;
-      margin-bottom: 0.4em;
-      font-size: 2em;
-    }
-    .logo {
-      width: 500px;
-      margin-bottom: 0.8em;
-    }
-    .button {
+
+    .eyebrow {
       display: inline-block;
-      padding: 0.7em 1.6em;
-      margin: 1.1em 0 0 0;
-      font-size: 1.18em;
-      color: #fff;
-      background: #3949ab;
-      border: none;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.18s;
+      margin-bottom: 0.8rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: var(--primary);
+      font-size: 0.92rem;
+      font-weight: 700;
     }
-    .button:hover {
-      background: #283593;
+
+    h1 {
+      color: var(--primary);
+      margin: 0 0 0.25rem 0;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
     }
-    .pub-link {
+
+    .subtitle {
+      margin: 0 auto 1.5rem auto;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 2.2vw, 1.32rem);
+    }
+
+    .screenshot {
+      width: min(680px, 100%);
+      height: auto;
       display: block;
-      margin: 1.2em 0 0.2em 0;
-      color: #3949ab;
-      font-size: 1.01em;
-      text-decoration: underline;
+      margin: 1.25rem auto 1.6rem auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(16, 24, 40, 0.12);
     }
-    .footer {
-      margin-top: 2.4em;
-      font-size: 0.98em;
-      color: #666;
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      justify-content: center;
+      margin: 1.4rem 0 1.2rem 0;
     }
-    .footer a {
-      color: #3949ab;
-      text-decoration: underline;
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0.75rem 1.35rem;
+      color: #fff;
+      background: var(--primary-light);
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 4px 12px rgba(57, 73, 171, 0.24);
     }
+
+    .button:hover,
+    .button:focus {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 7px 18px rgba(57, 73, 171, 0.28);
+    }
+
+    .button.secondary {
+      background: #ffffff;
+      color: var(--primary);
+      border: 1px solid #c7d2fe;
+      box-shadow: none;
+    }
+
+    .button.secondary:hover,
+    .button.secondary:focus {
+      background: #eef2ff;
+    }
+
+    .content {
+      max-width: 760px;
+      margin: 2rem auto 0 auto;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin: 1.8rem 0;
+    }
+
+    .info-card {
+      padding: 1rem;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fbfcff;
+    }
+
+    .info-card strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: var(--primary);
+    }
+
+    h2 {
+      margin-top: 2rem;
+      color: var(--primary);
+      font-size: 1.35rem;
+    }
+
+    .notice {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-left: 4px solid var(--primary-light);
+      background: #f8faff;
+      color: #374151;
+      border-radius: 10px;
+    }
+
     .coffee {
-      margin-top: 1.5em;
-      margin-bottom: 0.5em;
+      margin-top: 2rem;
+      text-align: center;
     }
-    @media (max-width: 700px) {
-      .container { padding: 1.1em; }
+
+    .coffee p {
+      margin-bottom: 0.6rem;
+      color: var(--muted);
+    }
+
+    .footer {
+      margin-top: 2.2rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    a {
+      color: var(--primary-light);
+    }
+
+    a:focus {
+      outline: 3px solid rgba(57, 73, 171, 0.30);
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 760px) {
+      .container {
+        margin: 16px auto;
+        padding: 1.2rem;
+        border-radius: 14px;
+      }
+
+      .card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .button-row {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
     }
   </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "SAPESUCA",
+    "alternateName": "Salzburg Peritoneal Surface Calculator",
+    "applicationCategory": "MedicalApplication",
+    "operatingSystem": "Web",
+    "url": "https://www.sapesuca.com/",
+    "author": {
+      "@type": "Person",
+      "name": "Tarkan Jäger"
+    },
+    "description": "SAPESUCA is a peer-reviewed academic tool for individualized peritoneal surface area calculation, published in Cancers.",
+    "isAccessibleForFree": true,
+    "citation": "https://www.mdpi.com/2072-6694/15/12/3134"
+  }
+  </script>
 </head>
 <body>
-  <div class="container">
-    <h1>SAPESUCA</h1>
-    <img src="sapesuca_screen.png" alt="SAPESUCA Screenview" class="logo">
-    <p>
-      <strong>Salzburg Peritoneal Surface Calculator</strong><br>
-      An academic, peer-reviewed tool for individualized calculation of the peritoneal surface area. The app is provided <strong>free of charge</strong> for scientific and clinical use.
-    </p>
-    <a class="pub-link" href="https://www.mdpi.com/2072-6694/15/12/3134" target="_blank">
-      Read the publication (MDPI Cancers 2023)
-    </a>
-    <a class="button" href="https://taja.shinyapps.io/sapesuca-app/" target="_blank">
-      Open the SAPESUCA App
-    </a>
+  <main class="container">
+    <section class="hero" aria-labelledby="page-title">
+      <span class="eyebrow">Peer-reviewed academic tool · Published in <em>Cancers</em></span>
+      <h1 id="page-title">SAPESUCA</h1>
+      <p class="subtitle"><strong>Salzburg Peritoneal Surface Calculator</strong><br>Individualized peritoneal surface area calculation for CRS and HIPEC research.</p>
 
-    <div class="footer">
-      &copy; 2023 Tarkan Jäger <br> Department of Surgery, Paracelsus Medical University Salzburg, Austria<br>
-       <br>
-      <a href="mailto:tarkan.jaeger@gmail.com">Contact: tarkan.jaeger@gmail.com</a>
-    </div>
+      <img src="sapesuca_screen.png" alt="Screenshot of the SAPESUCA web application showing individualized peritoneal surface area calculation" class="screenshot" loading="eager" width="1272" height="612">
 
- <!-- Buy Me a Coffee Button -->
-    <div class="coffee">
-      <a href="https://www.buymeacoffee.com/tarkanjaeger" target="_blank">
-        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 45px; width: 165px;">
-      </a>
-    </div>
-  </div>
+      <div class="button-row" aria-label="Primary links">
+        <a class="button" href="https://taja.shinyapps.io/sapesuca-app/" target="_blank" rel="noopener noreferrer">Open the SAPESUCA App</a>
+        <a class="button secondary" href="https://www.mdpi.com/2072-6694/15/12/3134" target="_blank" rel="noopener noreferrer">Read the publication</a>
+      </div>
+    </section>
+
+    <section class="content" aria-label="About SAPESUCA">
+      <p>
+        SAPESUCA is an academic, freely accessible and peer-reviewed tool for individualized calculation of the peritoneal surface area. It was developed to support standardized assessment of peritoneal surface area in patients undergoing cytoreductive surgery and HIPEC-related research.
+      </p>
+
+      <div class="card-grid" aria-label="Key features">
+        <div class="info-card">
+          <strong>Individualized</strong>
+          Patient-specific estimation of peritoneal surface area rather than simplified assumptions.
+        </div>
+        <div class="info-card">
+          <strong>Research-focused</strong>
+          Supports structured assessment in CRS, HIPEC, and peritoneal metastasis research.
+        </div>
+        <div class="info-card">
+          <strong>Open access</strong>
+          Provided free of charge for scientific and professional clinical use.
+        </div>
+      </div>
+
+      <h2>Why this matters</h2>
+      <p>
+        The tool may help quantify patient-specific and resected peritoneal surface area in the context of cytoreductive surgery. This is clinically relevant because intraperitoneal treatment concepts often rely on simplified assumptions rather than individualized surface area estimates.
+      </p>
+
+      <p>
+        SAPESUCA may support future research into more personalized CRS and HIPEC workflows, including dose-related research questions and the standardized comparison of cytoreduction across institutions.
+      </p>
+
+      <div class="notice" role="note">
+        <strong>Professional use and disclaimer:</strong>
+        SAPESUCA is intended for professional education, scientific use, and clinical research support. It does not replace clinical judgment, validated institutional protocols, or individual medical advice.
+      </div>
+
+      <div class="coffee">
+        <p>Support ongoing development, hosting, maintenance, and future academic tools.</p>
+        <a href="https://www.buymeacoffee.com/tarkanjaeger" target="_blank" rel="noopener noreferrer">
+          <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Tarkan Jäger a coffee" style="height:45px;width:165px;max-width:100%;">
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      &copy; 2026 Tarkan Jäger · Department of Surgery, Paracelsus Medical University Salzburg, Austria<br>
+      <a href="mailto:tarkan.jaeger@gmail.com">tarkan.jaeger@gmail.com</a> · <a href="https://www.jaeger-ordination.com/" target="_blank" rel="noopener noreferrer">jaeger-ordination.com</a>
+    </footer>
+  </main>
 </body>
 </html>
